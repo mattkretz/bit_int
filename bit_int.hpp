@@ -119,8 +119,6 @@ template <int W, sign S>
 
     constexpr bit_int() = default;
 
-    constexpr bit_int(const bit_int&) = default;
-
     // enable implicit/explicit conversion to bit_int<W1, S1> from types with conversion operator to
     // bit_int<W0, S0>
     template <typename T>
