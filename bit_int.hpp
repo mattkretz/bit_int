@@ -145,6 +145,17 @@ template <int W, sign S>
                       "bit_int width too small for given constant");
       }
 
+    // initialization from constant expression
+    template <std::integral T>
+      consteval
+      bit_int(T x)
+      : value(x)
+      {
+        using U = std::conditional_t<std::is_signed_v<T>, std::make_unsigned_t<T>, T>;
+        if (U(value) != U(x))
+          throw "bit_int width too small for given constant";
+      }
+
     // conversions from other bit_int specializations
     template <int W1>
       constexpr explicit(W1 > W)
