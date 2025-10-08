@@ -129,6 +129,12 @@ template <int W, sign S>
       bit_int(const T& x)
       : bit_int(static_cast<as_bit_int_t<T>>(x)) {}
 
+    // initialization from _BitInt(W)
+    constexpr
+    bit_int(std::same_as<value_type> auto x)
+    : value(x)
+    {}
+
     // initialization from integral_constant
     template <constexpr_wrapper_like T>
       consteval

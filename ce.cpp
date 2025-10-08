@@ -4,6 +4,7 @@ static_assert(std::is_same_v<std::common_type_t<bit_int<16>, bit_int<20>>, bit_i
 static_assert(std::is_same_v<std::common_type_t<bit_int<16>, bit_uint<20>>, bit_int<21>>);
 static_assert(std::is_same_v<std::common_type_t<bit_uint<16>, bit_int<20>>, bit_int<20>>);
 static_assert(std::is_same_v<std::common_type_t<bit_uint<16>, bit_uint<20>>, bit_uint<20>>);
+static_assert(std::is_same_v<std::common_type_t<_BitInt(16), bit_int<16>>, bit_int<16>>);
 
 static_assert(    std::convertible_to<int, bit_int<32>>);
 static_assert(not std::convertible_to<int, bit_int<31>>);
