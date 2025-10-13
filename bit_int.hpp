@@ -183,6 +183,25 @@ template <int W, sign S>
       bit_int(T x)
       : value(x) {}
 
+    // conversions to standard integer types
+    template <std::signed_integral T>
+      requires (S == sign::Signed and sizeof(T) * CHAR_BIT >= W)
+      constexpr explicit
+      operator T() const
+      { return value; }
+
+    template <std::signed_integral T>
+      requires (S == sign::Unsigned and sizeof(T) * CHAR_BIT - 1 >= W)
+      constexpr explicit
+      operator T() const
+      { return value; }
+
+    template <std::unsigned_integral T>
+      requires (S == sign::Unsigned and sizeof(T) * CHAR_BIT >= W)
+      constexpr explicit
+      operator T() const
+      { return value; }
+
     // comparisons (see also bit_int_ops)
     friend constexpr bool
     operator==(bit_int lhs, bit_int rhs)
