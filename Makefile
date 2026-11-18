@@ -1,5 +1,11 @@
+CXXFLAGS=-std=c++29 -Wall -Wextra # $(CLANG_FLAGS)
+
 check: test.cpp bit_int.hpp
-	$(CXX) -std=c++26 -Wall -Wextra -c -o test.o test.cpp
+	$(CXX) $(CXXFLAGS) -c -o test.o test.cpp
 	@rm test.o
 
-.PHONY: check
+check2: test2.cpp integer.hpp
+	$(CXX) $(CXXFLAGS) -c -o test2.o test2.cpp
+	@rm test2.o
+
+.PHONY: check check2
