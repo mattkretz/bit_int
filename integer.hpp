@@ -11,7 +11,7 @@
 #include <type_traits>
 
 /*
- * value-preserving integers
+ * integers with value-preserving conversions
  *
  * Design goals:
  *
@@ -323,9 +323,11 @@ namespace std
           return static_cast<_Cp>(__lhs) == static_cast<_Cp>(__rhs);
       }
 
+    // You would typically expect strong_ordering as return type. However, if the common_type _Cp is
+    // e.g. float, this uses partial_ordering as return type, which is why we use 'auto'.
     template <typename _Lp, __common_type_is_other_or_not_basic<_Lp> _Rp>
       [[__gnu__::__always_inline__]]
-      friend constexpr strong_ordering
+      friend constexpr auto
       operator<=>(const _Lp& __lhs, const _Rp& __rhs) noexcept
       {
         static_assert(!same_as<_Lp, _Rp>);

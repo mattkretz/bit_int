@@ -190,3 +190,8 @@ void test()
   constexpr basic_int a = 5wb;
   show_me<a>(a);
 }
+
+bool cmp(i32 a, float b)
+{
+  return a < b;
+}

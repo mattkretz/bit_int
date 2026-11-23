@@ -77,10 +77,12 @@ static_assert(std::constructible_from<std::modulo_integer<31>, unsigned>);
 static_assert(std::constructible_from<std::integer<4>, std::integer<5>>);
 static_assert(std::constructible_from<std::integer<5>, std::modulo_integer<5>>);
 
-// correct mixed-signed compares
+// correct mixed-type compares
 static_assert(std::integer<16>(-1) < std::modulo_integer<16>(1));
 static_assert(std::integer<16>(1) == std::modulo_integer<16>(1));
 static_assert(std::integer<16>(-1) != std::modulo_integer<16>(1));
+static_assert(std::integer<16>(1) != float(1.5));
+static_assert(std::integer<16>(1) < float(1.5));
 
 // CTAD from integral_constant deduces minimal width
 static_assert(std::is_same_v<decltype(std::basic_int(std::integral_constant<int, 3>())), std::modulo_integer<2>>);
@@ -115,3 +117,16 @@ static_assert([] {
 
 static_assert(true ? std::i8(-1) : std::u8(1) == std::i8(-1));
 static_assert(std::is_same_v<decltype(true ? std::i8(-1) : std::u8(1)), std::integer<9>>);
+
+constexpr bool
+f(std::i16 x)
+{ return x == 1; };
+
+bool
+test(unsigned char one)
+{ return f({one}); } // OK because value-preserving conversion
+
+// implicit value-preserving cast in consteval
+static_assert([] {
+  return f({1}); // f(1) would be ill-formed because int->i16 is explicit
+}());

@@ -8,4 +8,8 @@ check2: test2.cpp integer.hpp
 	$(CXX) $(CXXFLAGS) -c -o test2.o test2.cpp
 	@rm test2.o
 
-.PHONY: check check2
+.PHONY: check check2 help
+
+help:
+	echo "... check"
+	echo "... check2"
